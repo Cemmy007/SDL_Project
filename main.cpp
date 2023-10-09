@@ -1,16 +1,31 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "Screen.h"
 
 using namespace std;
+using namespace sdlMiniProject;
 
 int main(int argc, char *argv[])
 {
+    Screen screen;
 
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (screen.init() == false)
     {
-        cout << "uh oh" << endl;
-        return false;
+        cout << "Error initialising SDL!" << endl;
     }
-    cout << "not uh oh" << endl;
+
+    while (true)
+    {
+        screen.update();
+
+        // check for messages/events
+        if (screen.processEvents() == false)
+        {
+            break;
+        }
+    }
+
+    screen.close();
+
     return 0;
 }
